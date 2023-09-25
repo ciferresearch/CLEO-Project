@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.2.9/dist/web3.min.js"></script> 
+    <script src="web3.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Requestor Page</title>
+  </head>
+  <body>
+    <div id="banner">
+      <h1>Secure Data Sharing Platform</h1>
+    </div>
+
+    
+    <nav style="text-align: center; background-color: #f2f2f2; padding: 20px;">
+      <ul style="list-style-type: none; margin: 0; padding: 0; display: inline-block;">
+        <li style="margin-right: 10px; display: inline-block;"><a href="home.html"style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Home</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="registerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Registration</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="ownerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Patient</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="publisherpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Publisher</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="requestorpage.html" style="text-decoration: none; color: #fff; padding: 10px 15px; border-radius: 4px; background-color:  #6f6e6e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Requestor</a></li>
+    
+      </ul>
+    </nav>
+
+    <br>
+  
+
+      
+    <div id="selectAddress">
+      <label for="addressSelect">Wallet Address:</label>
+      <select id="addressSelect">
+        <option value="" disabled selected>Select Address</option>
+      </select>
+      <button id="updateButton" >Update</button>
+
+    </div>
+    
+      <h4 id="userAddress" style="margin: 25px 0 25px 50px;">User ID:</h4>
+
+
+    
+      <h2 id="ProjectTableHeading">Active Research Projects </h2>
+
+      
+      <table class="styled-table" id="project-list" style="width:70%">
+        <tr>
+          <th>Project Title </th>
+          <th>Start date</th>
+          <th>End date</th> 
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </table>
+  
+
+      <h2>Data Access Requests</h2>
+    <table class="styled-table" id="uploaded-files" style="width:70%">
+      <tr>
+        <th>DataID</th>
+        <th>Owner ID</th>
+        <th>Publisher</th>
+        <th>Upload date</th>
+        <th>Upload time</th>
+        <th>Select Program</th>
+        <th>Select Duration</th>
+        <th>Request</th>
+      </tr>
+    </table>
+    <div id="transaction-status"></div>
+    
+
+    <h2> Approved Data Files</h2>
+    <table class="styled-table" id="request-files" style="width:70%">
+      <tr>
+        <th>DataID</th>
+        <th>Owner ID</th>
+        <th>Approval Date</th>
+        <th>Approval time</th>
+        <th>CID</th>
+      </tr>
+    </table>
+
+
+    <h2>Event History</h2>
+
+    <table class="styled-table" id="event-history" style="width:80%">
+      <tr>
+        <th>Event Name</th>
+        <th>Event Data</th>
+      </tr>
+    </table>
+
+    <footer class="footer" style="background-color: #f2f2f2; padding: 20px;">
+      <div style="background-color: #009879; height: 1px; width: 100%;"></div>
+
+      <ul style="list-style-type: none; display: flex; justify-content: center; padding: 0;">
+        <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color: #555;">Home</a></li>
+        <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:  #555;">About</a></li>
+        <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:   #555;">Services</a></li>
+        <li><a href="#" style="text-decoration: none; color:  #555; ">Contact</a></li>
+      </ul>
+      <div  style="text-align: center;">
+        <p>&copy; CLEO - Canadian Network for Learning Healthcare Systems and Cost-Effective 'Omics Innovation. All rights reserved.</p>
+      </div>
+   
+    </footer>
+
+
+    <script>
+
+
+// Get the lsit of all avaible
+web3.eth.getAccounts().then(function(addresses) {
+                              const select = document.getElementById("addressSelect");
+                              contract.getPastEvents('typeofidentity', {fromBlock: 0, toBlock: 'latest'}, (error, logs) => {
+                              if (!error) {
+                                for (let i = 0; i < logs.length; i++) {
+                                  const log = logs[i];
+                                  const identity = log.returnValues._user;
+                                  const type = log.returnValues._type;
+
+                                  if (type === 'requestor') {
+                                    for (let j = 0; j < addresses.length; j++) {
+                                      const address = addresses[j];
+                                     
+                                      if (address === identity) {
+                                        let option = document.createElement("option");
+                                        option.text = address;
+                                        option.value = address;
+                                        select.appendChild(option);
+                                      }
+                                    }
+                                  }
+                                }  
+                              }
+                            });
+                          });
+
+
+                          
+const table_project=document.getElementById("project-list");                 
+const table = document.getElementById("uploaded-files");
+const table2 = document.getElementById("request-files");
+const table3 = document.getElementById("event-history");
+
+const addressSelect = document.getElementById("addressSelect");
+
+function updateTables(selectedAddress){
+  let userAddressEl=document.getElementById("userAddress")
+  userAddressEl.innerHTML = "User ID: <a href='./identitypage.html?id=" + selectedAddress + "' target='_blank'>" + selectedAddress.substring(0,8)+ "</a>";      
+  
+    const addButton = document.createElement('i');
+    addButton.className = 'fas fa-plus-circle fa-lg';
+    addButton.setAttribute('aria-label', 'Add Project');
+    addButton.setAttribute('title', 'Add Project');
+
+    // Add a click event listener to the button
+    addButton.addEventListener('click', function() {
+      window.open('ProjectDetailsform.html?address='+selectedAddress, '_blank');
+    });
+
+    var ProjectTableHeading = document.getElementById('ProjectTableHeading');
+    var previousButton = ProjectTableHeading.querySelector('button');
+
+if (previousButton) {
+  ProjectTableHeading.removeChild(previousButton);
+}
+
+ProjectTableHeading.appendChild(addButton);
+  // Clear the existing rows from the table
+       
+        while (table_project.rows.length > 1) {
+        table.deleteRow(1);
+      }
+      while (table.rows.length > 1) {
+        table.deleteRow(1);
+      }
+      while (table2.rows.length > 1) {
+        table2.deleteRow(1);
+      }
+
+      while (table3.rows.length > 1) {
+        table3.deleteRow(1);
+      }
+// Declare an array to store project data
+let projectData = [];
+
+contract.getPastEvents("projectEvent", {
+  filter: { _owner: selectedAddress },
+  fromBlock: 0,
+  toBlock: "latest"
+}, (error, events) => {
+  if (!error) {
+    // Iterate through all events
+    events.forEach(event => {
+      // Get the event data
+      const projectID = event.returnValues._projecthash;
+      const projectTitle = event.returnValues._projectTitle;
+
+      // Store the project data in the array
+      projectData.push([projectID, projectTitle]);
+
+      const startTimestamp = event.returnValues._startdate;
+      const startDate = new Date(startTimestamp * 1000);
+
+// Display the date
+    
+
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    
+      const endTimestamp = event.returnValues._enddate;
+      const endDate = new Date(endTimestamp * 1000);
+
+      const row = table_project.insertRow();
+      const projectTitleCell = row.insertCell();
+      const startDateCell = row.insertCell();
+      const endDateCell = row.insertCell();
+      const StatusCell=row.insertCell();
+      const ActionCell=row.insertCell();
+
+      projectTitleCell.innerHTML = "<a href='./projectfilepage.html?id=" + projectID + "' target='_blank'>" + projectTitle + "</a>";
+      startDateCell.innerHTML = startDate.toLocaleDateString(undefined, options);
+      endDateCell.innerHTML = endDate.toLocaleDateString(undefined, options);
+      StatusCell.innerHTML = 'Active';
+
+     
+
+      const answerButton = document.createElement('i');
+      answerButton.className = 'fas fa-reply fa-lg';
+      answerButton.setAttribute('aria-label', 'Respond to Question');
+      answerButton.setAttribute('title', 'Respond to Question');
+
+      answerButton.addEventListener('click', () => {
+      const url = `./answer.html?param1=${encodeURIComponent(projectID)}&param2=${encodeURIComponent(selectedAddress)}`;
+      window.open(url, '_blank');
+      });
+
+
+      ActionCell.appendChild(answerButton);
+
+      const spacing = document.createTextNode('\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0'); // Non-breaking space
+        ActionCell.appendChild(spacing);
+
+        const uploadButton = document.createElement('i');
+        uploadButton.className = 'fas fa-file-upload fa-lg'; // Assuming you have the appropriate icon class
+        uploadButton.setAttribute('aria-label', 'Upload Report');
+        uploadButton.setAttribute('title', 'Upload Report');
+
+        uploadButton.addEventListener('click', () => {
+      const url = `./uploadreport.html?param1=${encodeURIComponent(projectID)}`;
+      window.open(url, '_blank');
+      });
+
+      
+      ActionCell.appendChild(uploadButton);
+        
+
+      // Process the event data
+      // ...
+    });
+  }
+});
+
+// You can now use the projectData array outside the function
+console.log(projectData);
+
+//check for deposit events and display in second table
+  contract.getPastEvents("depositEvent", {  
+    fromBlock: 0,
+    toBlock: "latest"
+  }, (error, events) => {
+    if (!error) {
+      // Iterate through all events
+     
+      events.forEach(event => {
+  
+        // Get the event data
+        const dataID = event.returnValues._hash;
+        const ownerID=event.returnValues._owner;
+        const publisherID = event.returnValues._publisher;
+        const timeFile=event.returnValues._time;
+        const publisherName=event.returnValues._publishername;
+        
+        contract.getPastEvents('removalEvent', {
+          filter: { _owner: ownerID, _hash: dataID },
+          fromBlock: 0,
+          toBlock: 'latest'
+        }, (error, events) => {
+          if (error) {
+            console.error(error);
+            return;
+          }
+          if (events.length > 0) {
+            console.log(`Hash ${dataID} was already removed`);   
+          } else {
+
+        contract.getPastEvents('statusEvent', {
+          filter: {_requestor:selectedAddress, _owner: ownerID, _hash: dataID },
+          fromBlock: 0,
+          toBlock: 'latest'
+        }, (error, events) => {
+          if (error) {
+            console.error(error);
+            return;
+          }
+
+          if (events.length > 0) {
+            console.log(`Hash ${dataID} was already removed`);
+          } else {
+
+        // Create a new table row
+        const row = table.insertRow();
+        // Insert cells into the row
+        const dataIDCell = row.insertCell();
+        const ownerIDCell = row.insertCell();
+        const publisherIDCell = row.insertCell();
+        const dateFileCell=row.insertCell();
+        const timeFileCell=row.insertCell();
+        const projectCell = row.insertCell();
+        const projectDuration = row.insertCell();
+        const requestCell = row.insertCell();
+        
+        // Converting transaction time to human-readable format
+        const date = new Date(timeFile * 1000);
+        const dateString = date.toLocaleDateString();
+        const timeString = date.toLocaleTimeString();
+      
+        // Fill the cells with data
+        dataIDCell.innerHTML = "<a href='./datafilepage.html?id=" + dataID + "' target='_blank'>" + dataID.substring(2, 7) + "</a>";
+        ownerIDCell.innerHTML = "<a href='./identitypage.html?id=" + ownerID + "' target='_blank'>" + ownerID.substring(0, 8) + "</a>";
+        publisherIDCell.innerHTML = "<a href='./identitypage.html?id=" + publisherID + "' target='_blank'>" + publisherName + "</a>";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.style.width = "50px";
+        input.placeholder = "months";
+        projectDuration.appendChild(input);
+        
+
+
+        dateFileCell.innerHTML = dateString;
+        timeFileCell.innerHTML = timeString;
+     
+        // Add a remove button to the last cell
+        const requestButton = document.createElement('button');
+        requestButton.innerText = 'Request';
+
+        // Create dropdown menu
+        const dropdown = document.createElement('select');
+        for (let i = 0; i < projectData.length; i++) {
+          const option = document.createElement('option');
+         option.text = projectData[i][1]; // Assuming project titles are stored at index 1 of each sub-array
+       
+         option.value = projectData[i][0]; // Set value as the project hash
+      option.text = projectData[i][1]; // Set text as the project title
+      dropdown.appendChild(option);
+        }
+
+        requestButton.addEventListener('click', () => {
+          if (confirm('Are you sure you want to request this data file?'+ dropdown.text)) {
+
+            const selectedOption = dropdown.options[dropdown.selectedIndex];
+            const projectTitle = selectedOption.text;
+            const projectHash = selectedOption.value;
+            const projectDuration = input.value;
+      
+
+            contract.methods.addrequest(ownerID, dataID,projectTitle,projectHash, projectDuration).send({ from: selectedAddress })
+              .on('transactionHash', function (hash) {
+                console.log('Transaction Hash:', hash);
+              })
+              .on('receipt', function (receipt) {
+                console.log('Receipt:', receipt);
+                document.getElementById("transaction-status").innerHTML = "Request has been succesfully Submitted (Transaction ID: " + receipt.transactionHash.substring(2, 7)+")";               
+                requestCell.innerText = "Requested";
+              })
+              .on('error', function (error) {
+                console.error('Error:', error);
+                document.getElementById("transaction-status").innerHTML = "Transaction Failed: " + error;
+              });
+          }
+        });
+
+        // Create container element for button and dropdown
+        const container = document.createElement('div');
+        container.style.display = 'inline-block';
+      
+        projectCell.appendChild(dropdown);
+        requestCell.appendChild(requestButton);
+        
+
+       
+
+        }
+        });
+
+   }
+
+        });
+      
+      
+      }
+  );
+  
+    } 
+  });
+
+
+
+//check for request events and display in third table
+  contract.getPastEvents("statusEvent", {  
+    filter: { _requestor: selectedAddress },
+    fromBlock: 0,
+    toBlock: "latest"
+  }, (error, events) => {
+    if (!error) {
+      // Iterate through all events
+        events.forEach(event => {
+
+        if(event.returnValues._request==1)
+                { 
+        // Get the event data
+        const dataID = event.returnValues._hash;
+        const ownerID = event.returnValues._owner;
+        const timeFile=event.returnValues._time;
+      
+        // Create a new table row
+        const row = table2.insertRow();
+        // Insert cells into the row
+        const dataIDCell = row.insertCell();
+        const ownerIDCell = row.insertCell();
+        const dateFileCell=row.insertCell();
+        const timeFileCell=row.insertCell();
+        const requestCell = row.insertCell();
+        
+        // Converting transaction time to human-readable format
+        const date = new Date(timeFile * 1000);
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        const dateString = date.toLocaleDateString(undefined, options);
+        const timeString = date.toLocaleTimeString();
+      
+        // Fill the cells with data
+        dataIDCell.innerHTML = "<a href='./datafilepage.html?id=" + dataID + "' target='_blank'>" + dataID.substring(2,7)+ "</a>";
+        ownerIDCell.innerHTML = "<a href='./identitypage.html?id=" + ownerID + "' target='_blank'>" + ownerID.substring(0,8) + "</a>";
+        dateFileCell.innerHTML = dateString;
+        timeFileCell.innerHTML = timeString;
+
+        contract.getPastEvents("depositEvent", {  
+    filter: { _hash: dataID },
+    fromBlock: 0,
+    toBlock: "latest"
+  }, (error, events) => {
+    if (!error) {
+      // Iterate through all events
+     
+      events.forEach(event => {
+        const CID = event.returnValues._CID;
+
+        const viewButton = document.createElement('i');
+            viewButton.className = 'fas fa-eye fa-lg';
+            viewButton.setAttribute('aria-label', 'View');
+            viewButton.setAttribute('title', 'View');
+            viewButton.addEventListener('click', () => {
+               
+  
+              const url = `https://ipfs.io/ipfs/${CID}`;
+              window.open(url, '_blank');
+
+            });
+            
+            requestCell.appendChild(viewButton);
+
+
+
+
+  
+      }
+  );
+  
+    } 
+  });
+
+     
+        // Add a remove button to the last cell
+        
+                }
+      }
+  );
+  
+    } 
+  });
+
+//history table
+
+  contract.getPastEvents('allEvents', {
+    filter: { _owner: selectedAddress },
+    fromBlock: 0,
+    toBlock: 'latest',
+
+  }, (error, events) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+                  for (let i = 0; i < events.length; i++) {
+                const event = events[i];
+                const type = event.event;
+                const content = JSON.stringify(event.returnValues);
+         
+            if(type=='removalEvent')
+                {
+                const row = table3.insertRow(-1);
+                const typeCell = row.insertCell(0);
+                const contentCell = row.insertCell(1);
+
+                const date = new Date(event.returnValues._time * 1000);
+                const dateString = date.toLocaleDateString();
+                const timeString = date.toLocaleTimeString();
+
+               
+
+                typeCell.innerText = "Data File Removed";
+                contentCell.innerText = "The data file "+event.returnValues._hash.substring(2,7)+" was removed on "+dateString+" at "+timeString;
+                  }
+
+            if(type=='requestEvent'&&event.returnValues._requestor==selectedAddress)
+                {
+                const row = table3.insertRow(-1);
+                const typeCell = row.insertCell(0);
+                const contentCell = row.insertCell(1);
+
+                const date = new Date(event.returnValues._time * 1000);
+                const dateString = date.toLocaleDateString();
+                const timeString = date.toLocaleTimeString();
+
+              
+
+                typeCell.innerText = "Data File Request";
+                contentCell.innerText = "The data file "+ event.returnValues._hash.substring(2,7)+ " was requested by "+event.returnValues._requestor.substring(0,8)+" on "+dateString+" at "+timeString;
+                  }
+
+            if(type=='statusEvent'&&event.returnValues._requestor==selectedAddress)
+                {
+               const row = table3.insertRow(-1);
+                const typeCell = row.insertCell(0);
+                const contentCell = row.insertCell(1);
+
+                const date = new Date(event.returnValues._time * 1000);
+                const dateString = date.toLocaleDateString();
+                const timeString = date.toLocaleTimeString();
+
+            
+                if(event.returnValues._request==1)
+                typeCell.innerText = "Request Accepted";
+                { contentCell.innerText = "The data file "+event.returnValues._hash.substring(2,7)+ " requested by "+event.returnValues._requestor.substring(0,8)+" was accepted on "+dateString+ " at "+timeString;
+                }
+                if(event.returnValues._request==2)
+                {
+                  typeCell.innerText = "Request Rejected";
+                  contentCell.innerText = "The data file "+event.returnValues._hash.substring(2,7)+ " requested by "+event.returnValues._requestor.substring(0,8)+" was rejected on "+dateString+ " at "+timeString;
+               
+                }
+                 }
+
+              
+   
+   
+      }
+  });
+
+}
+
+addressSelect.addEventListener("change", (event) => {
+  const selectedAddress = event.target.value;
+  console.log(`Selected address: ${selectedAddress}`);
+  updateTables(selectedAddress)
+
+});
+
+
+var updateButton = document.getElementById("updateButton");
+// add a click event listener to the button
+updateButton.addEventListener("click", function() {
+  // your code to be executed when the button is clicked goes here
+  
+
+  const addressSelect = document.getElementById("addressSelect");
+  const selectedOption = addressSelect.options[addressSelect.selectedIndex];
+  const selectedAddress = selectedOption.value;
+  
+  // do something with the selected address, such as logging it to the console
+
+
+  updateTables(selectedAddress)
+
+});
+             
+
+    </script>
+
+  
+  </body>
+</html>

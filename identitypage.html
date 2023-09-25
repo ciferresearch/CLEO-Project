@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.2.9/dist/web3.min.js"></script> 
+    <script src="web3.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Profile Infomation Page</title>
+  </head>
+  <body>
+    <div id="banner">
+      <h1>Secure Data Sharing Platform</h1>
+    </div>
+
+    <nav style="text-align: center; background-color: #f2f2f2; padding: 20px;">
+      <ul style="list-style-type: none; margin: 0; padding: 0; display: inline-block;">
+        <li style="margin-right: 10px; display: inline-block;"><a href="home.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px  #6f6e6e;">Home</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="registerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px  #6f6e6e;">Registration</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="ownerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Patient</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="publisherpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Publisher</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="requestorpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Requestor</a></li>
+    
+      </ul>
+    </nav>
+  
+    
+    <h2>Identity Information</h2>
+    <table  id="identityTable" class="styled-table" style="width:55%">
+      <tr>
+        <th>Profile</th>
+        <th>Information</th>
+      </tr>
+    </table>
+
+    <footer class="footer" style="background-color: #f2f2f2; padding: 20px;">
+      <div style="background-color: #009879; height: 1px; width: 100%;"></div>
+      <ul style="list-style-type: none; display: flex; justify-content: center; padding: 0;">
+        <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color: #555;">Home</a></li>
+        <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:  #555;">About</a></li>
+        <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:   #555;">Services</a></li>
+        <li><a href="#" style="text-decoration: none; color:  #555; ">Contact</a></li>
+      </ul>
+      <div  style="text-align: center;">
+        <p>&copy; CLEO - Canadian Network for Learning Healthcare Systems and Cost-Effective 'Omics Innovation. All rights reserved.</p>
+      </div>
+    </footer>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const userAddress = urlParams.get("id");
+      console.log(userAddress)
+
+//function to read the events and check the type of user of that address 
+// based on the type of user the fuction is called to retireive the idnentity
+      async function checkUserIdentity() {
+
+  let events = await contract.getPastEvents('typeofidentity', {
+    filter: { _user: userAddress },
+    fromBlock: 0,
+    toBlock: 'latest'
+  });
+
+  if (events.length === 0) {
+    console.log('No identity found for this user');
+    return;
+  }
+
+  let userType = events[0].returnValues._type;
+  let identity;
+
+  if (userType === 'owner') {
+    identity = await contract.methods.getIdowner(userAddress).call();
+
+    document.getElementById("identityTable").innerHTML += `
+          <tr>
+            <td><strong>Name</strong></td>
+            <td>${identity[0]}</td>
+          </tr>
+          <tr>
+            <td><strong>Gender</strong></td>
+            <td>${identity[1]}</td>
+          </tr>
+          <tr>
+            <td><strong>Date of Birth</strong></td>
+            <td>${Date(identity[2])}</td>
+          </tr>
+
+            <td><strong>Phone Number</strong></td>
+            <td>${identity[3]}</td>
+          </tr>
+          <tr>
+            <td><strong>Email Address</strong></td>
+            <td>${identity[4]}</td>
+          </tr>
+          <tr>
+            <td><strong>Identification Number</strong></td>
+            <td>${identity[5]}</td>
+          </tr>
+        
+        `;
+       
+
+  } else if (userType === 'publisher') {
+    identity = await contract.methods.getIdpublisher(userAddress).call();
+    document.getElementById("identityTable").innerHTML += `
+    <tr>
+            <td><strong>Organization Name</strong></td>
+            <td>${identity[0]}</td>
+          </tr>
+          <tr>
+            <td><strong>organization Address</strong></td>
+            <td>${identity[1]}</td>
+          </tr>
+          <tr>
+            <td><strong>Test type</strong></td>
+            <td>${identity[2]}</td>
+          </tr>
+          <tr>
+            <td><strong>Turnaround Time</strong></td>
+            <td>${identity[3]}</td>
+          </tr>
+        `;
+
+  } else if (userType === 'requestor') {
+    identity = await contract.methods.getIdrequestor(userAddress).call();
+    document.getElementById("identityTable").innerHTML += `
+    <tr>
+            <td><strong>Organization Name</strong></td>
+            <td>${identity[0]}</td>
+          </tr>
+          <tr>
+            <td><strong>Requestor type</strong></td>
+            <td>${identity[2]}</td>
+          </tr>
+          <tr>
+            <td><strong>Purpose</strong></td>
+            <td>${identity[1]}</td>
+          </tr>
+        `;
+ 
+  } else {
+    console.log('Invalid user type');
+    return;
+  }
+
+  console.log(`Identity of user type ${userType}: `, identity);
+//displaying th evalues in the table 
+  document.getElementById("address").innerHTML = userAddress;
+        document.getElementById("name").innerHTML = identity[0];
+        document.getElementById("type").innerHTML = identity[1];
+}
+
+checkUserIdentity() //calling the fucntion
+
+    </script>
+  </body>
+</html>
+

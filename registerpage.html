@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.2.9/dist/web3.min.js"></script> 
+    <script src="web3.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Registeration Page</title>
+  </head>
+  <body>
+    <div id="banner">
+      <h1>Secure Data Sharing Platform</h1>
+    </div>
+
+   
+ 
+    <nav style="text-align: center; background-color: #f2f2f2; padding: 20px;">
+      <ul style="list-style-type: none; margin: 0; padding: 0; display: inline-block;">
+        <li style="margin-right: 10px; display: inline-block;"><a href="home.html"style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Home</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="registerpage.html"  style="text-decoration: none; color: #fff; padding: 10px 15px; border-radius: 4px; background-color:  #6f6e6e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Registration</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="ownerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Patient</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="publisherpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Publisher</a></li>
+        <li style="margin-right: 10px; display: inline-block;"><a href="requestorpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Requestor</a></li>
+    
+      </ul>
+    </nav>
+<br>
+<p style="margin: 10px 50px;">Join our SDSP application by registering as an <strong>Patient</strong>, <strong>Publisher</strong>, or <strong>Requestor</strong> using your wallet address.</p>
+   
+ 
+
+    <button onclick="connect()" style="margin: 10px 50px; padding: 10px 20px; background-color:  #555; color: white; border: none; border-radius: 4px; cursor: pointer;">Connect to Wallet</button>
+
+	<p style="margin: 10px 50px;">Wallet Address: <span id="address"></span></p>
+
+    
+      <br>
+    <form id="identity-form">
+      <label for="identity" style="margin:25px 50px;">Identity Type:</label>
+      <select id="identity" name="identity">
+        <option value="" disabled selected>Select Type</option>
+        <option value="owner">Patient</option>
+        <option value="requester">Requester</option>
+        <option value="publisher">Publisher</option>
+      </select>
+      <br><br>
+    </form> 
+    <!-- Owner information form -->
+    <div id="owner-form" style="display: none;">
+      <form>
+        <label for="owner-name" style="margin: 25px 0px 25px 50px;">Name:</label>
+	      <input type="text" id="owner-name" name="owner-name"><br><br>
+        
+        <label for="owner-gender" style="margin: 25px 0px 25px 50px;">Gender:      </label>
+        <input type="text" id="gender-name" name="gender-name"><br><br>
+
+        <label for="owner-dob" style="margin: 25px 0px 25px 50px;">Date of Birth:</label>
+        <input type="date" id="owner-dob" name="owner-dob"><br><br>
+
+        <label for="owner-phone" style="margin: 25px 0px 25px 50px;">Phone Number:</label>
+        <input type="tel" id="owner-phone" name="owner-phone"><br><br>
+
+        <label for="owner-email" style="margin: 25px 0px 25px 50px;">Email Address:</label>
+        <input type="email" id="owner-email" name="owner-email"><br><br>
+
+        <label for="owner-id" style="margin: 25px 0px 25px 50px;">Identification Number:</label>
+        <input type="text" id="owner-id" name="owner-id"><br><br>
+    
+      </form>
+    </div>
+    <!-- Requester information form -->
+    <div id="requester-form" style="display: none;">
+      <form>
+        <label for="requester-orgname" style="margin: 25px 0px 25px 50px;" >Name:</label>
+        <input type="text" id="requester-orgname" name="requester-orgname"><br><br>
+        <label for="requester-type" style="margin: 25px 0px 25px 50px;">Type:</label>
+        <select id="requester-type" name="requester-type">
+        
+          <option value="pharmaceutical">Pharmaceutical</option>
+          <option value="biotechnology">Biotechnology</option>
+          <option value="diagnostic">Diagnostic</option>
+          <option value="research-organizations">Research Organizations</option>
+        </select><br><br>
+        <label for="requester-purpose" style="margin: 25px 0px 25px 50px;">Purpose:</label>
+        <select id="requester-purpose" name="requester-purpose">
+        
+          <option value="research">Research</option>
+          <option value="diagnosis">Diagnosis</option>
+          <option value="treatment">treatment</option>
+          <option value="drug-development">Drug Development</option>
+          <option value="insurance">Insurance</option>
+
+        
+          
+        </select><br><br>
+
+      </form>
+    </div>
+    <!-- Publisher information form -->
+    <div id="publisher-form" style="display: none;">
+      <form>
+        <label for="publisher-orgname" style="margin: 25px 0px 25px 50px;">Organization Name:</label>
+        <input type="text" id="publisher-orgname" name="publisher-orgname"><br><br>
+
+        <label for="publisher-type" style="margin: 25px 0px 25px 50px;">Organization Type :</label>
+        <select id="publisher-type" name="publisher-type">
+
+          <option value="Hospital">Hospital</option>
+          <option value="Private-Clinic">Private Clinic</option>
+        </select><br><br>
+
+     
+        
+        <label for="publisher-orgaddress" style="margin: 25px 0px 25px 50px;">Address:</label>
+        <input type="text" id="publisher-orgaddress" name="publisher-orgaddress" required style="width: 300px;"><br><br>
+
+        <label for="testing-type" style="margin: 25px 0px 25px 50px;">Testing Type:</label>
+        <select id="testing-type" name="testing-type">
+
+          <option value="Next-Generation-Sequencing">Next-Generation Sequencing (NGS)</option>
+          <option value="whole-genome-sequencing">Whole Genome Sequencing (WGS)</option>
+          <option value="whole-exome-sequencing">Whole Exome Sequencing (WES)</option>
+          <option value="targeted-gene-panels">Targeted Gene Panels</option>
+    
+         
+        </select><br><br>
+        
+        
+        <label for="turnaround-time" style="margin: 25px 0px 25px 50px;">Turnaround Time:</label>
+        <select id="turnaround-time">
+          <option value="1-2 week">1-2 week</option>
+          <option value="2-3 week">2-3 week</option>
+          <option value="3-4 week">3-4 week</option>
+          <option value="4-5 week">4-5 week</option>
+          <option value="5-6 week">5-6 week</option>
+          <option value="6-7 week">6-7 week</option>
+        </select>
+
+      </form>
+    </div>
+    <!-- Submit button -->
+    <button id="submit-btn" style="margin: 25px 50px;">Register</button>
+    <br>
+    <div id="transaction-status"></div>
+    </form> 
+
+    <footer class="footer" style="background-color: #f2f2f2; padding: 20px;">
+      <div style="background-color: #009879; height: 1px; width: 100%;"></div>
+
+      <ul style="list-style-type: none; display: flex; justify-content: center; padding: 0;">
+        <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color: #555;">Home</a></li>
+        <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:  #555;">About</a></li>
+        <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:   #555;">Services</a></li>
+        <li><a href="#" style="text-decoration: none; color:  #555; ">Contact</a></li>
+      </ul>
+      <div  style="text-align: center;">
+        <p>&copy; CLEO - Canadian Network for Learning Healthcare Systems and Cost-Effective 'Omics Innovation. All rights reserved.</p>
+      </div>
+   
+    </footer>
+    
+  
+    <script>
+
+
+                if (typeof window.ethereum !== 'undefined') {
+                // Use MetaMask's provider
+                window.ethereum
+              } else {
+                // Handle the case where the user doesn't have MetaMask installed
+                alert('Please install MetaMask!');
+              }
+
+              // Connect to MetaMask
+              async function connect() {
+                try {
+                  // Request accounts access
+                  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+
+                  // Set the current account address
+                  const address = accounts[0];
+                  document.getElementById("address").innerText = address;
+
+                  // Subscribe to account change events
+                  ethereum.on('accountsChanged', function (accounts) {
+                    // Update the displayed address when the account changes
+                    const address = accounts[0];
+                    document.getElementById("address").innerText = address;
+                  });
+                } catch (error) {
+                  console.error(error);
+                }
+              }
+
+
+  
+    document.getElementById("identity").addEventListener("change", function() {
+      const identity = this.value;
+      if (identity === "owner") {
+        document.getElementById("owner-form").style.display = "block";
+        document.getElementById("requester-form").style.display = "none";
+        document.getElementById("publisher-form").style.display = "none";
+      } else if (identity === "requester") {
+        document.getElementById("owner-form").style.display = "none";
+        document.getElementById("requester-form").style.display = "block";
+        document.getElementById("publisher-form").style.display = "none";
+      } else if (identity === "publisher") {
+        document.getElementById("owner-form").style.display = "none";
+        document.getElementById("requester-form").style.display = "none";
+        document.getElementById("publisher-form").style.display = "block";
+      }
+      document.getElementById("submit-btn").style.display = "block";
+    });
+  
+    // Save the identity information on the blockchain
+    document.getElementById("submit-btn").addEventListener("click", function() {
+        
+      const identity = document.getElementById("identity").value;
+      const from =  document.getElementById("address").innerText;
+
+      console.log(
+      document.getElementById("address").innerText)
+    
+      if (identity === "owner") {
+        let name = document.getElementById("owner-name").value;
+        let gender=document.getElementById("gender-name").value;
+        var dob=document.getElementById("owner-dob").value;
+        var dobDate = new Date(dob);
+        var dobTimestamp = Math.floor(dobDate.getTime() / 1000);
+        let phone=document.getElementById("owner-phone").value;
+        let email=document.getElementById("owner-email").value;
+        let id=document.getElementById("owner-id").value;
+
+
+
+
+        contract.methods.RegisterOwner(name,gender,dobTimestamp,phone,email,id).send({ from: from, gas: '100000000000'})
+          .then(function(receipt) {
+            document.getElementById("transaction-status").innerHTML = "Transaction Successful: " + receipt.transactionHash;
+          })
+          .catch(function(error) {
+            document.getElementById("transaction-status").innerHTML = "Transaction Failed: " + error;
+          });
+      } else if (identity === "requester") {
+        const orgname = document.getElementById("requester-orgname").value;
+        const purpose = document.getElementById("requester-purpose").value;
+        const reqtype = document.getElementById("requester-type").value;
+        
+
+        contract.methods.RegisterRequestor(orgname, purpose,reqtype).send({ from: from, gas: '100000000000'})
+          .then(function(receipt) {
+            document.getElementById("transaction-status").innerHTML = "Transaction Successful: " + receipt.transactionHash;
+          })
+          .catch(function(error) {
+            document.getElementById("transaction-status").innerHTML = "Transaction Failed: " + error;
+        });
+    } else if (identity === "publisher") {
+      const orgname = document.getElementById("publisher-orgname").value;
+      const orgaddress = document.getElementById("publisher-orgaddress").value;
+      const testtype = document.getElementById("testing-type").value;
+      const turnaroundtime = document.getElementById("turnaround-time").value;
+      contract.methods.RegisterPublisher(orgname, orgaddress,testtype,turnaroundtime).send({ from: from , gas: '100000000000'})
+        .then(function(receipt) {
+          document.getElementById("transaction-status").innerHTML = "Transaction Successful: " + receipt.transactionHash;
+        })
+        .catch(function(error) {
+          document.getElementById("transaction-status").innerHTML = "Transaction Failed: " + error;
+        });
+    }
+  });
+</script>
+  
+</script>
+    
+
+  </body>
+
+
+</html>
+

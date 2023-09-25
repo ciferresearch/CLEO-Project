@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Publisher Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.2.9/dist/web3.min.js"></script> 
+    <script src="web3.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Publisher Page</title>
+  </head>
+  <body>
+    <div id="banner">
+      <h1>Secure Data Sharing Platform</h1>
+      </div>
+      <nav style="text-align: center; background-color: #f2f2f2; padding: 20px;">
+        <ul style="list-style-type: none; margin: 0; padding: 0; display: inline-block;">
+          <li style="margin-right: 10px; display: inline-block;"><a href="home.html"style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Home</a></li>
+          <li style="margin-right: 10px; display: inline-block;"><a href="registerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Registration</a></li>
+          <li style="margin-right: 10px; display: inline-block;"><a href="ownerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Patient</a></li>
+          <li style="margin-right: 10px; display: inline-block;"><a href="publisherpage.html" style="text-decoration: none; color: #fff; padding: 10px 15px; border-radius: 4px; background-color:  #6f6e6e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Publisher</a></li>
+          <li style="margin-right: 10px; display: inline-block;"><a href="requestorpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Requestor</a></li>
+      
+        </ul>
+      </nav>
+<br>
+      <div id="selectAddress">
+        <label for="addressSelect">Wallet Address:</label>
+        <select id="addressSelect">
+          <option value="" disabled selected>Select Address</option>
+        </select>
+      </div>
+        <h4 id="selectedAddress">User ID:</h4>
+
+        <h2>Upload Data File</h2>
+
+      <p style="margin: 25px 50px;">Please fill out the required information to upload your patient data.</p>
+
+<div id="address-select" style="margin: 0px 50px;">
+  <label for="address-dropdown">Select Address:</label>
+  <select id="address-dropdown">
+    <option value="" disabled selected>Select Address</option>
+  </select>
+</div>
+
+<div style="margin: 25px 50px;">
+  <label for="data-type">Select Data Type:</label>
+  <select id="data-type" name="data-type">
+    <option value="genomic">Genomic</option>
+    <option value="clinical">Clinical</option>
+    <option value="imaging">Imaging</option>
+  </select>
+</div>
+
+<div style="margin: 25px 50px;">
+  <label for="file-name">File Name:</label>
+  <input type="text" id="file-name" name="file-name" required style="width: 200px;">
+</div>
+
+
+<div style="margin: 25px 50px;">
+  <label for="file-format">Input file format:</label>
+  <select id="file-format" name="file-fmt" required style="width: 200px;">
+    <option value="">Select file format</option>
+    <option value="FASTA">FASTA</option>
+    <option value="FASTQ">FASTQ</option>
+    <option value="BAM">BAM</option>
+    <option value="SAM">SAM</option>
+    <option value="GFF">GFF</option>
+    <option value="CSV">CSV</option>
+    <option value="HL7">HL7</option>
+    <option value="CDISC">CDISC</option>
+    <option value="FHIR">FHIR</option>
+    <option value="DICOM">DICOM</option>
+    <option value="CDA">CDA</option>
+    <option value="NIfTI">NIfTI</option>
+    <option value="Analyze">Analyze</option>
+    <option value="MINC">MINC</option>
+    <option value="JPEG">JPEG</option>
+    <option value="TIFF">TIFF</option>
+  </select>
+</div>
+
+
+
+
+<div style="margin: 25px 50px;">
+  <label for="dat-version">Data Version:</label>
+  <input type="text" id="dat-version" name="dat-version" required>
+</div>
+
+<div style="margin: 25px 50px;">
+  <label for="source-origin">Source/Origin:</label>
+  <input type="text" id="source-origin" name="source-origin" required>
+</div>
+
+<div style="margin: 25px 50px;">
+  <label for="primary-investigator">Primary Investigator:</label>
+  <input type="text" id="primary-investigator" name="primary-investigator" required>
+</div>
+
+<div style="margin: 25px 50px;">
+  <label for="data-description">Data Description:</label>
+  <textarea id="data-description" name="data-description" rows="2" cols="50" required></textarea>
+</div>
+
+<div style="margin: 25px 50px;">
+  <label for="file-input">File:</label>
+  <input type="file" id="file-input" name="file" required>
+</div>
+
+<div style="margin: 25px 50px;">
+  <button id="hash-button">Upload</button>
+  <div id="transaction-status"></div>
+</div>
+
+<footer class="footer" style="background-color: #f2f2f2; padding: 20px;">
+  <div style="background-color: #009879; height: 1px; width: 100%;"></div>
+
+  <ul style="list-style-type: none; display: flex; justify-content: center; padding: 0;">
+    <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color: #555;">Home</a></li>
+    <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:  #555;">About</a></li>
+    <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:   #555;">Services</a></li>
+    <li><a href="#" style="text-decoration: none; color:  #555; ">Contact</a></li>
+  </ul>
+  <div  style="text-align: center;">
+    <p>&copy; CLEO - Canadian Network for Learning Healthcare Systems and Cost-Effective 'Omics Innovation. All rights reserved.</p>
+  </div>
+
+</footer>
+
+<script type="module">
+       import { Web3Storage } from 'https://cdn.jsdelivr.net/npm/web3.storage/dist/bundle.esm.min.js'
+
+        //This function displays the only the addresses the publisher to be selected as wallet address
+        const select = document.getElementById("addressSelect");     
+        web3.eth.getAccounts().then(function(addresses) {
+               
+                contract.getPastEvents('typeofidentity', {fromBlock: 0, toBlock: 'latest'}, (error, logs) => {
+                if (!error) {
+                  for (let i = 0; i < logs.length; i++) {
+                    const log = logs[i];
+                    const identity = log.returnValues._user;
+                    const type = log.returnValues._type;
+
+                    if (type === 'publisher') {
+                      for (let j = 0; j < addresses.length; j++) {
+                        const address = addresses[j];
+           
+
+                        if (address === identity) {
+                          let option = document.createElement("option");
+                          option.text = address;
+                          option.value = address;
+                          select.appendChild(option);
+                        }
+                      }
+                    }
+                  }
+                }
+              });
+            });
+
+
+            select.addEventListener('change', function() {
+            const selectedAddress = this.value;
+             let userAddressEl=document.getElementById("selectedAddress")
+              userAddressEl.innerHTML = "User ID: <a href='./identitypage.html?id=" + selectedAddress + "' target='_blank'>" + selectedAddress.substring(0,8) + "</a>";
+
+            });
+
+
+//this fucntion allows the publisher to select the owner address 
+              web3.eth.getAccounts().then(function(addresses) {
+              const select = document.getElementById("address-dropdown");
+              contract.getPastEvents('typeofidentity', {fromBlock: 0, toBlock: 'latest'}, (error, logs) => {
+              if (!error) {
+                for (let i = 0; i < logs.length; i++) {
+                  const log = logs[i];
+                  const identity = log.returnValues._user;
+                  const type = log.returnValues._type;
+
+                  if (type === 'owner') {
+                    for (let j = 0; j < addresses.length; j++) {
+                      const address = addresses[j];
+              
+                      if (address === identity) {
+                        let option = document.createElement("option");
+                        option.text = address;
+                        option.value = address;
+                        select.appendChild(option);
+                      }
+                    }
+                  }
+                }
+              }
+            });
+          });
+
+      //this function takes the file form the computer and creates a hash of it stored in hex .
+      //Also it uploaded the hex to the blockchain
+
+      
+              
+
+      const button = document.getElementById("hash-button");
+  button.addEventListener("click", function() {
+  const input = document.getElementById("file-input");
+  const file = input.files[0];
+  const reader = new FileReader();
+
+      reader.onload = function() {
+      const buffer = new Uint8Array(reader.result);
+      window.crypto.subtle.digest("SHA-256", buffer).then(function(hash) {
+      const hex = Array.prototype.map.call(new Uint8Array(hash), x => ('00' + x.toString(16)).slice(-2)).join('');
+      console.log("File hash:", hex);
+      const hexWithPrefix = '0x' + hex;
+      const PublisherAddress = document.getElementById("addressSelect").value;
+      const OwnerAddress = document.getElementById("address-dropdown").value;
+      const dataType = document.getElementById("data-type").value;
+      const fileName = document.getElementById("file-name").value;
+      const fileFormat = document.getElementById("file-format").value;
+      const dataVersion = document.getElementById("dat-version").value;
+      const sourceOrigin = document.getElementById("source-origin").value;
+      const primaryInvestigator= document.getElementById("primary-investigator").value;
+      const dataDescription = document.getElementById("data-description").value;
+ 
+
+
+  
+      const files = input.files;
+      if (files.length > 0) {
+        const client = new Web3Storage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweGNlRjlkMEQ4QzZGRTJmMTk5YTk0ZTExOWVlNDM0RTMzYUE2MTI4OGIiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2ODE0OTQxMTQ0MjYsIm5hbWUiOiJTRFNQIn0.sBUzZzCMhFeT4sqNhcuB8Nn0Wi2CSMy79M_F6UpVlTM' });
+        client.put(files)
+          .then(cid => {
+            console.log('Stored files with CID:', cid);
+            const hexWithPrefix = '0x' + hex;
+            return contract.methods.addFile(hexWithPrefix, OwnerAddress, cid, dataType, fileName, fileFormat, dataVersion, sourceOrigin, primaryInvestigator, dataDescription).send({ from: PublisherAddress, gas: 100000000 });
+          })
+          .then(receipt => {
+            console.log('File added:', receipt);
+            document.getElementById("transaction-status").innerHTML = "Data file has been succesfully uploaded (Transaction ID: " + receipt.transactionHash.substring(2, 7)+")";
+          })
+          .catch(error => {
+            console.error('Error uploading files:', error);
+            document.getElementById("transaction-status").innerHTML = "Transaction Failed: " + error;
+          });
+      } else {
+        alert('Please select a file to upload.');
+      }
+    });
+  };
+  reader.readAsArrayBuffer(file);
+});
+
+
+
+  </script> 
+  </body>
+</html>

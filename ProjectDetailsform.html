@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Publisher Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.2.9/dist/web3.min.js"></script> 
+    <script src="web3.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Project Form</title>
+  </head>
+  <body>
+    <div id="banner">
+      <h1>Secure Data Sharing Platform</h1>
+      </div>
+    
+      <nav style="text-align: center; background-color: #f2f2f2; padding: 20px;">
+        <ul style="list-style-type: none; margin: 0; padding: 0; display: inline-block;">
+          <li style="margin-right: 10px; display: inline-block;"><a href="home.html"style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Home</a></li>
+          <li style="margin-right: 10px; display: inline-block;"><a href="registerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Registration</a></li>
+          <li style="margin-right: 10px; display: inline-block;"><a href="ownerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Patient</a></li>
+          <li style="margin-right: 10px; display: inline-block;"><a href="publisherpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Publisher</a></li>
+          <li style="margin-right: 10px; display: inline-block;"><a href="requestorpage.html" style="text-decoration: none; color: #fff; padding: 10px 15px; border-radius: 4px; background-color:  #6f6e6e; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">Requestor</a></li>
+      
+        </ul>
+      </nav>
+<br>
+      
+    <h4 id="selectedAddress">User Address:</h4>
+    <p style="margin: 25px 50px;">Please fill out the required information about your research Project.</p>
+
+      
+<p style="margin: 25px 50px;"><strong>Project Details</strong></p>
+       
+<div style="margin: 25px 50px;">
+    <label for="project-title">Project Title:</label><br>
+    <input type="text" id="project-title" name="project-title" required style="width: 700px; height: 20px;" placeholder="Name of the research project">
+</div>
+
+
+        <div style="margin: 25px 50px;">
+          <label for="project-des">Project Description</label><br>
+          <textarea id="project-des" name="project-des" required style="width: 700px; height: 50px;" placeholder="Brief overview of the project objectives and scope"></textarea>
+        </div>
+
+
+        <div style="margin: 25px 50px;">
+          <label for="start-date">Project Start Date:</label><br>
+          <input type="date" id="start-date" name="start-date" required>
+      </div>
+      
+      
+      <div style="margin: 25px 50px;">
+          <label for="end-date">Project End Date:</label><br>
+          <input type="date" id="end-date" name="end-date" required>
+      </div>
+
+        
+        <p style="margin: 25px 50px;"><strong>Data Usage:</strong> </p>
+
+
+        
+  <div style="margin: 25px 50px;">
+    <label for="exp-results">Expected Results:</label><br>
+    <textarea type="text" id="exp-results" name="exp-results" required style="width: 700px; height: 50px;" placeholder="Outline the potential outcomes or findings from the project"></textarea>
+  </div>  
+
+   
+  <div style="margin: 25px 50px;">
+    <label for="access-duration">Access Duration (in months):</label><br>
+    <input type="number" id="access-duration" name="access-duration" required min="1" max="60" style="width: 100px;" placeholder="Duration">
+</div>
+
+        <p style="margin: 25px 50px;"><strong>Ethical Considerations:</strong> </p>
+
+       
+          <div style="margin: 25px 50px;">
+            <label for="ethical-approval">Ethical Approval:</label><br>
+            <textarea type="text" id="ethical-approval" name="ethical-approval" style="width: 700px; height: 50px;" placeholder="Indicate whether the project has obtained relevant ethical approvals or certifications"></textarea>
+          </div>  
+
+          <div style="margin: 25px 50px;">
+            <label for="compliance">Compliance:</label><br>
+            <textarea type="text" id="compliance" name="compliance" style="width: 700px; height: 50px;" placeholder="Confirm compliance with any applicable data sharing policies or regulations"></textarea>
+          </div>  
+
+
+          <div style="margin: 25px 50px;">
+            <label for="feedback">Feedback & Reporting period:</label><br>
+            <textarea type="text" id="feedback" name="feedback" style="width: 700px; height: 50px;" placeholder="Provide an outline of the reporting process and its frequency"></textarea>
+          </div>  
+
+
+          
+<div style="margin: 25px 50px;">
+    <button id="submit-buttonbutton">Submit</button>
+  </div>
+
+  <div style="margin: 25px 50px;">
+    <div id="transaction-status"></div>
+  </div>
+
+        
+<footer class="footer" style="background-color: #f2f2f2; padding: 20px;">
+  <div style="background-color: #009879; height: 1px; width: 100%;"></div>
+
+  <ul style="list-style-type: none; display: flex; justify-content: center; padding: 0;">
+    <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color: #555;">Home</a></li>
+    <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:  #555;">About</a></li>
+    <li style="margin-right: 10px;"><a href="#" style="text-decoration: none; color:   #555;">Services</a></li>
+    <li><a href="#" style="text-decoration: none; color:  #555; ">Contact</a></li>
+  </ul>
+  <div  style="text-align: center;">
+    <p>&copy; CLEO - Canadian Network for Learning Healthcare Systems and Cost-Effective 'Omics Innovation. All rights reserved.</p>
+  </div>
+
+</footer>
+
+<script>
+ const urlParams = new URLSearchParams(window.location.search);
+      const userAddress = urlParams.get("address");
+      console.log(userAddress)
+
+  let userAddressEl=document.getElementById("selectedAddress")
+  userAddressEl.innerHTML = "User Addresss: <a href='./identitypage.html?id=" + userAddress + "' target='_blank'>" + userAddress + "</a>";
+      
+
+
+ // Wait for the DOM to load
+document.addEventListener('DOMContentLoaded', function() {
+  // Get the submit button element
+  var submitButton = document.getElementById('submit-buttonbutton');
+
+  // Attach a click event listener to the submit button
+  submitButton.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    // Get the values from the form fields
+    var projectTitle = document.getElementById('project-title').value;
+    var projectDescription = document.getElementById('project-des').value;
+    var startDateInput = document.getElementById('start-date');
+    var endDateInput = document.getElementById('end-date');
+    var startDate = new Date(startDateInput.value);
+    var endDate = new Date(endDateInput.value);
+    var startTimestamp = Math.floor(startDate.getTime() / 1000);
+    var endTimestamp = Math.floor(endDate.getTime() / 1000);
+    var accessDuration = document.getElementById('access-duration').value;
+    var expectedResults = document.getElementById('exp-results').value;
+    var ethicalApproval = document.getElementById('ethical-approval').value;
+    var compliance = document.getElementById('compliance').value;
+    var feedback = document.getElementById('feedback').value;
+
+
+    // Log the captured values to the console
+    var projectTitleHash = web3.utils.keccak256(projectTitle);  
+
+
+    contract.methods.addProject(projectTitleHash, projectTitle,projectDescription,expectedResults,accessDuration,ethicalApproval,compliance,startTimestamp, endTimestamp, feedback).send({from: userAddress, gas: 100000000000})
+              .on('transactionHash', function(hash){
+                console.log('Transaction Hash:', hash);
+              })
+              .on('receipt', function(receipt){
+                console.log('Receipt:', receipt);
+                document.getElementById("transaction-status").innerHTML = "Project has been successfully added <br>Transaction Successful: " + receipt.transactionHash;
+               requestCell.innerText="Requested";
+               
+              })
+              .on('error', function(error){
+                console.error('Error:', error);
+                document.getElementById("transaction-status").innerHTML = "Transaction Failed: " + error;
+        
+              });
+
+  });
+});
+
+
+
+</script>
+
+  </body>
+</html>
+
+
+

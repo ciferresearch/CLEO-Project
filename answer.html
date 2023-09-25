@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.2.9/dist/web3.min.js"></script> 
+    <script src="web3.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Home  Page</title>
+    
+  </head>
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+ 
+  
+<body>
+  <div id="banner" >
+    <h1>Secure Data Sharing Platform</h1>
+  </div>
+
+  <nav style="text-align: center; background-color: #f2f2f2; padding: 20px;">
+    <ul style="list-style-type: none; margin: 0; padding: 0; display: inline-block;">
+      <li style="margin-right: 10px; display: inline-block;"><a href="home.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px  #6f6e6e;">Home</a></li>
+      <li style="margin-right: 10px; display: inline-block;"><a href="registerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px  #6f6e6e">Registration</a></li>
+      <li style="margin-right: 10px; display: inline-block;"><a href="ownerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Patient</a></li>
+      <li style="margin-right: 10px; display: inline-block;"><a href="publisherpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Publisher</a></li>
+      <li style="margin-right: 10px; display: inline-block;"><a href="requestorpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Requestor</a></li>
+  
+    </ul>
+  </nav>
+
+  <h2>Question List</h2>
+  <ul id="questionList"></ul>
+
+
+  <script>
+    const queryParams = new URLSearchParams(window.location.search);
+    var projectID = queryParams.get('param1');
+    var requestorID = queryParams.get('param2');
+     // Function to get and display questions
+
+     console.log(projectID)
+
+        // Get questions and display on the page
+        async function displayQuestions() {
+         // Set your project ID here
+            const questions = await contract.methods.getQuestions(projectID).call();
+
+            const questionList = document.getElementById('questionList');
+            for (let i = 0; i < questions.length; i++) {
+                const question = questions[i];
+                const listItem = document.createElement('div');
+                listItem.textContent = `Question ${i + 1}: ${question.questionText}`;
+                questionList.appendChild(listItem);
+
+                const answerText = question.answerText;
+        if (answerText.trim() !== '') {
+            const answerElement = document.createElement('p');
+            answerElement.textContent = `Answer: ${answerText}`;
+            listItem.appendChild(answerElement);
+        }
+        if (answerText ==='') {
+          
+              
+                const replyButton = document.createElement('i');
+                 replyButton.className = 'fas fa-reply fa-lg';
+                replyButton.setAttribute('aria-label', 'Respond to Question');
+                replyButton.setAttribute('title', 'Respond to Question');
+    
+
+                replyButton.addEventListener('click', () => {
+                    const answerText = prompt('Enter your answer');
+                    if (answerText !== null && answerText.trim() !== '') {
+                        answerQuestion(projectID, i, answerText);
+                    }
+                });
+                listItem.appendChild(replyButton);
+            }
+            }
+        }
+
+        async function answerQuestion(projectID, questionIndex, answerText) {
+            await contract.methods.answerQuestion(projectID, questionIndex, answerText).send({ from: requestorID });
+            // Reload the page to update the question list
+            location.reload();
+        }
+
+
+        window.addEventListener('load', async () => {
+            // Set your Ethereum provider (e.g., MetaMask) and check if it's available
+            if (window.ethereum) {
+                await window.ethereum.enable();
+            }
+
+            // Display questions on page load
+            await displayQuestions();
+        });
+
+
+
+
+
+  </script>
+
+</body>
+
+
+
+
+
+
+
+
+
+  </html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.2.9/dist/web3.min.js"></script> 
+    <script src="web3.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Home  Page</title>
+    
+  </head>
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+ 
+  
+<body>
+  <div id="banner" >
+    <h1>Secure Data Sharing Platform</h1>
+  </div>
+
+  <nav style="text-align: center; background-color: #f2f2f2; padding: 20px;">
+    <ul style="list-style-type: none; margin: 0; padding: 0; display: inline-block;">
+      <li style="margin-right: 10px; display: inline-block;"><a href="home.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px  #6f6e6e;">Home</a></li>
+      <li style="margin-right: 10px; display: inline-block;"><a href="registerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px  #6f6e6e">Registration</a></li>
+      <li style="margin-right: 10px; display: inline-block;"><a href="ownerpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color: #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Patient</a></li>
+      <li style="margin-right: 10px; display: inline-block;"><a href="publisherpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Publisher</a></li>
+      <li style="margin-right: 10px; display: inline-block;"><a href="requestorpage.html" style="text-decoration: none; color: #555; padding: 10px 15px; border-radius: 4px; background-color:  #f2f2f2; box-shadow: 0 2px 4px #6f6e6e;">Requestor</a></li>
+  
+    </ul>
+  </nav>
+
+
+  <h2>Previously Answered Questions</h2>
+  <div style="margin: 10px 50px;" id="questionsContainer"></div>
+  <h2>Submit Question</h2>
+  <div id="postQuestion">
+    <form id="questionForm">
+      <label for="question" style="margin: 10px 50px;">Question:</label><br>
+      <textarea style="margin: 10px 50px;" id="question" name="question" rows="4" cols="50" required></textarea><br><br>
+      <input style="margin: 5px 50px;" type="submit" value="Submit Question">
+      <div id="transaction-status"></div>
+    </form>
+  </div>
+    
+
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const requestorID = params.get('param1');
+      const projectHash = params.get('param2');
+      const ownerID = params.get('param3');
+
+    const questionForm = document.getElementById('questionForm');
+    questionForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      const questionInput = document.getElementById('question');
+      const question = questionInput.value;
+
+    
+
+      console.log(question); // Output: the value entered in the question field
+      console.log(requestorID); // Output: the value of 'param1'
+      console.log(projectHash); // Output: the value of 'param2'
+      console.log(ownerID); // Output: the value of 'param3'
+
+      // Here you can perform further actions with the captured values
+
+
+          uploadQuestion(projectHash, requestorID, question)
+          .then(receipt => {
+            console.log('Transaction succeeded!');
+            document.getElementById("transaction-status").innerHTML = "Your question has been succesfully submitted";
+          })
+          .catch(error => {
+            console.error('Error uploading question:', error);
+          });
+
+
+
+   
+
+
+
+    });
+
+    async function uploadQuestion(projectId, questionTo, questionText) {
+        const accounts = await web3.eth.getAccounts();
+        const txObject = contract.methods.uploadQuestion(projectId, questionTo, questionText);
+        const gas = await txObject.estimateGas({ from: accounts[0] });
+        const tx = txObject.send({ from: accounts[0], gas });
+        console.log('Question uploaded. Transaction hash:', tx.transactionHash);
+        }
+
+
+
+        async function displayQuestions() {
+            try {
+                var questions = await contract.methods.getQuestions(projectHash).call();
+                var questionsContainer = document.getElementById('questionsContainer');
+
+                questions.forEach(function(question) {
+                    if (question.questionFrom === ownerID) {
+                        var questionText = question.questionText;
+                        var answerText = question.answerText;
+
+                        var questionElement = document.createElement('div');
+                        questionElement.innerHTML = '<p><strong>Question:</strong> ' + questionText + '</p>';
+                        questionElement.innerHTML += '<p><strong>Answer:</strong> ' + answerText + '</p>';
+
+                        questionsContainer.appendChild(questionElement);
+                    }
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // Call the async function to display questions and answers
+        displayQuestions();
+
+
+  </script>
+
+</body>
+
+
+
+
+  </html>
