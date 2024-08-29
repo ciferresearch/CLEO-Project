@@ -129,6 +129,80 @@ The smart contracts are located in the `contracts/` directory. These contracts d
     ```bash
     truffle migrate
     ```
+## Smart Contract: `Registry.sol`
+
+The `Registry` smart contract serves as the core of the SDSP (Secured Data Sharing Platform) and manages the registration and interaction of three types of users: owners, requestors, and publishers. It also handles the management and sharing of genomic data files and project-related information.
+
+### Features
+
+1. **User Registration**
+   - The contract allows three types of users to register:
+     - **Owners**: Individuals whose genomic data is being shared. Owners can register with their details like name, age, gender, and cancer type.
+     - **Requestors**: Organizations or entities requesting access to genomic data. They can register with details like organization name, purpose, and request type.
+     - **Publishers**: Entities responsible for publishing genomic data, such as labs or data centers. They can register with details like organization name, address, test type, and turnaround time.
+
+2. **Data Storage and Management**
+   - Owners can store genomic data files on the platform by providing a unique hash for each file along with metadata such as CID (Content Identifier), filename, file format, genome build, and genome coverage.
+   - The contract maintains a mapping (`hashMapping`) to store the relationship between the file owner, the file hash, and its associated metadata.
+
+3. **Data Removal**
+   - Owners have the ability to remove files they have uploaded. The removal process verifies the ownership before deleting the data to ensure that only the rightful owner can remove their data.
+
+4. **Data Access Requests**
+   - Requestors can request access to specific genomic data by submitting a request, which includes a project title and a unique project hash.
+   - Owners can approve or reject access requests made by requestors. The request status is tracked using an enumerated `RequestStatus` that can be `pending`, `approved`, or `rejected`.
+
+5. **Project Management**
+   - Owners can create and manage projects on the platform. Projects are stored with details like title, description, purpose, results, duration, ethical considerations, and compliance status.
+   - A mapping (`projectMapping`) is used to associate each project with its owner and a unique project hash.
+
+6. **Q&A for Projects**
+   - The contract includes a question and answer system where project stakeholders can ask and answer questions related to specific projects.
+   - Users can upload questions, and only the intended recipient can provide answers, ensuring secure communication.
+
+### Events
+
+The contract emits several events to notify off-chain applications of important actions:
+
+- **`typeofidentity`**: Emitted whenever a new user (owner, requestor, or publisher) registers on the platform.
+- **`depositEvent`**: Emitted when a new genomic data file is uploaded, indicating successful storage.
+- **`removalEvent`**: Emitted when a genomic data file is removed by its owner.
+- **`requestEvent`**: Emitted when a requestor requests access to a specific genomic data file.
+- **`statusEvent`**: Emitted when an owner responds to a data access request.
+- **`projectEvent`**: Emitted when a new project is created on the platform.
+
+### Functions
+
+- **User Registration Functions:**
+  - `RegisterOwner(string memory _name, uint _age, string memory _gender, string memory _cancertype)`: Registers a new owner.
+  - `RegisterRequestor(string memory _orgname, string memory _purpose, string memory _reqtype)`: Registers a new requestor.
+  - `RegisterPublisher(string memory _orgname, string memory _orgaddress, string memory _testtype, string memory _turnaroundtime)`: Registers a new publisher.
+
+- **Data Management Functions:**
+  - `addFile(bytes32 _hash, address _address, string memory _CID, string memory _filename, string memory _fileFormat, string memory _genomeBuild, string memory _genomeCoverage)`: Adds a genomic data file with metadata.
+  - `removeFile(bytes32 _hash, address _publisheraddress)`: Removes a genomic data file owned by the user.
+
+- **Data Access Request Functions:**
+  - `addrequest(address _owneraddress, bytes32 _hash, string memory _projecttitle, bytes32 _projecthash)`: Submits a request for access to a genomic data file.
+  - `respondrequest(address _requestor, bytes32 _hash, RequestStatus _request)`: Responds to a data access request (approve or reject).
+
+- **Project Management Functions:**
+  - `addProject(bytes32 _projecthash, string memory _projectTitle, string memory _projectDes, string memory _projectPurpose, string memory _projectResults, string memory _projectDuration, string memory _projectEthical, string memory _projectCompliance, uint256 _startdate, uint _enddate)`: Creates a new project and stores its details.
+
+- **Question and Answer Functions:**
+  - `uploadQuestion(bytes32 projectId, address _questionto, string memory questionText)`: Allows stakeholders to upload a question related to a project.
+  - `getQuestions(bytes32 projectId)`: Retrieves all questions related to a specific project.
+  - `answerQuestion(bytes32 projectId, uint256 questionIndex, string memory answerText)`: Allows the intended recipient to answer a question.
+
+### Security Considerations
+
+- **Ownership Verification**: The contract verifies the ownership of data before allowing deletion, ensuring that only the rightful owner can remove their files.
+- **Access Control**: Request status and access rights are strictly managed through the functions provided, preventing unauthorized access to data.
+- **Data Integrity**: Uses hashing techniques to maintain the integrity of genomic data files stored on the platform.
+
+### Usage
+
+Deploy the `Registry` smart contract using Remix IDE or Truffle to either a local development network (Ganache) or a more extensive blockchain network (Hyperledger Besu). Follow the instructions provided in the [Setup Instructions](#setup-instructions) section to get started.
 
 ## Usage
 
