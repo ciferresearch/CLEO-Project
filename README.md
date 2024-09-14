@@ -208,6 +208,12 @@ Deploy the `Registry` smart contract using Remix IDE or Truffle to either a loca
 **Interact with the Blockchain**: Use the web interface to interact with the smart contracts and manage genomic data.
 
 
+## Contributing
+
+We welcome contributions to this project! Please fork the repository, make your changes, and submit a pull request. Be sure to include clear descriptions of your changes and any relevant issue numbers.
+
+
+
 
 
 
