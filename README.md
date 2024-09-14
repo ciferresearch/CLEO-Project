@@ -204,20 +204,10 @@ The contract emits several events to notify off-chain applications of important 
 ### Usage
 
 Deploy the `Registry` smart contract using Remix IDE or Truffle to either a local development network (Ganache) or a more extensive blockchain network (Hyperledger Besu). Follow the instructions provided in the [Setup Instructions](#setup-instructions) section to get started.
-
-## Usage
-
-1. **Access the Web App**: Open your browser and navigate to `http://localhost:3000` (or the port specified by your development server).
-2. **Interact with the Blockchain**: Use the web interface to interact with the smart contracts and manage genomic data.
-
-## Contributing
-
-We welcome contributions to this project! Please fork the repository, make your changes, and submit a pull request. Be sure to include clear descriptions of your changes and any relevant issue numbers.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-![image](https://github.com/user-attachments/assets/12aa10a6-c33e-481d-bcad-afcdd8b27fbd)
+ **Access the Web App**: Open your browser and navigate to `http://localhost:3000` (or the port specified by your development server).
+**Interact with the Blockchain**: Use the web interface to interact with the smart contracts and manage genomic data.
 
 
-![Uploading image.png…]()
+
+
+
