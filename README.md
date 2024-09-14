@@ -53,10 +53,9 @@ Key components include:
 
 ### Hyperledger Besu Network
 
-After initial testing on Ganache, you can deploy the project to a more extensive Hyperledger Besu network.
+After initial testing on Ganache, you can deploy the project to a more extensive **Hyperledger Besu** network.
 
-1. **Install Hyperledger Besu**: Follow the installation instructions on the [Hyperledger Besu documentation page](https://besu.hyperledger.org/en/stable/HowTo/Get-Started/Installation/).
-
+1. **Install Hyperledger Besu**: Install Hyperledger Besu using the [Quorum Developer Quickstart](https://besu.hyperledger.org/private-networks/tutorials/quickstart). The Quorum Developer Quickstart uses the Hyperledger Besu Docker image to run a private IBFT 2.0 network of Besu nodes managed by Docker Compose.
 
 
 ### MetaMask
@@ -93,8 +92,6 @@ To connect the frontend JavaScript code to Hyperledger Besu, make the following 
    ```javascript
    const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:8545"));
 
-markdown
-Copy code
 ## IPFS Integration
 
 To manage and store genomic data using IPFS, we use the Web3.storage API. Web3.storage provides a simple and scalable way to interact with the IPFS network.
@@ -121,7 +118,6 @@ To manage and store genomic data using IPFS, we use the Web3.storage API. Web3.s
      // Replace 'YOUR_API_TOKEN' with your Web3.storage API token
      const client = new Web3Storage({ token: 'YOUR_API_TOKEN' })
      ```
-
 
 ## Smart Contracts
 
