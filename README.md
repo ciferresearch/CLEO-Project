@@ -1,6 +1,6 @@
 # SDSP: Blockchain-Based Secured Data Sharing Platform
 
-Welcome to the SDSP repository! This project aims to facilitate secure and transparent sharing of genomic data using blockchain technology. This README provides instructions for setting up the development environment, running the project, and understanding its components. Please refere to the follwoing paper for the architecture of the SDSP https://ieeexplore.ieee.org/document/10577693
+Welcome to the SDSP repository! This project aims to facilitate secure and transparent sharing of genomic data using blockchain technology. This README provides instructions for setting up the development environment, running the project, and understanding its components. Please refer to the following paper for the architecture of the SDSP https://ieeexplore.ieee.org/document/10577693
 
 ## Table of Contents
 
@@ -56,9 +56,6 @@ Key components include:
 After initial testing on Ganache, you can deploy the project to a more extensive Hyperledger Besu network.
 
 1. **Install Hyperledger Besu**: Follow the installation instructions on the [Hyperledger Besu documentation page](https://besu.hyperledger.org/en/stable/HowTo/Get-Started/Installation/).
-   # SDSP: Blockchain-Based Secured Data Sharing Platform
-
-Welcome to the SDSP repository! This project aims to facilitate secure and transparent sharing of genomic data using blockchain technology. This README provides instructions for setting up the development environment, running the project, and understanding its components. Please refere to the follwoing paper for the architecture of the SDSP https://ieeexplore.ieee.org/document/10577693
 
 
 
